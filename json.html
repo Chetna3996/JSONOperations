@@ -1,0 +1,128 @@
+<html>
+<head>
+<title>JSON</title>
+</head>
+<body>
+<p id="para"></p>
+<script>
+
+var myObj = {
+	"id": "0001",
+	"type": "donut",
+	"name": "Cake",
+	"ppu": 0.55,
+	"batters":
+		{
+			"batter":
+				[
+					{ "id": "1001", "type": "Regular" },
+					{ "id": "1002", "type": "Chocolate" },
+					{ "id": "1003", "type": "Blueberry" },
+					{ "id": "1004", "type": "Devil's Food" }
+				]
+		},
+	"topping":
+		[
+			{ "id": "5001", "type": "None" },
+			{ "id": "5002", "type": "Glazed" },
+			{ "id": "5005", "type": "Sugar" },
+			{ "id": "5007", "type": "Powdered Sugar" },
+			{ "id": "5006", "type": "Chocolate with Sprinkles" },
+			{ "id": "5003", "type": "Chocolate" },
+			{ "id": "5004", "type": "Maple" }
+		]
+}
+var info="";
+window.onload=jsonP(myObj);
+
+function jsonP(myObj)
+{
+debugger;
+//alert("in fun");
+	var keys=Object.keys(myObj);
+	for(var i=0;i<keys.length;i++)
+			{
+				var key=keys[i];
+				var value=myObj[keys[i]];
+				if(Object.prototype.toString.call(value) == '[object Array]')
+						{
+						if(isNaN(key))
+						{
+						//alert(key);
+						info+="<br>"+key;
+						}
+							var keysArray=Object.keys(value);
+							for (var k = 0; k < keysArray.length; k++)
+								{
+								var key2 = keysArray[k];
+								var value2 = value[key2];
+								if(Object.prototype.toString.call(value2) == '[object Object]')
+								{
+								//info+="<br>"+key2;
+								jsonP(value2);
+								}
+								else if(Object.prototype.toString.call(value2) == '[object Array]')
+							{
+							if(isNaN(key2))
+							{
+								//alert(key2);
+								info+="<br>"+key2;
+							}
+							jsonP(value2);
+							}
+								else								
+								info+=":"+value2;
+								}					
+						}
+					
+                if(Object.prototype.toString.call(value) == '[object Object]')
+						{
+						if(isNaN(key))
+						{
+						//alert(key);
+						info+="<br>"+key;
+						}	var keysObj=Object.keys(value);
+							for (var k = 0; k < keysObj.length; k++)
+								{
+								var key2 = keysObj[k];
+								//alert("key2:"+key2+"Length"+keysObj.length);
+								var value2 = value[key2]; 
+								if(Object.prototype.toString.call(value2) == '[object Array]')
+							{
+							if(isNaN(key2))
+						{
+						//alert(key2);
+						info+="<br>"+key2;
+						}
+							jsonP(value2);
+							}
+							else if(Object.prototype.toString.call(value2) == '[object Object]')
+							{
+							info+="<br>"+key2;
+							jsonP(value2);
+							}
+							else{
+							
+								info+="<br>"+key2+" : "+value2;
+								}
+}								
+						}
+				if ((Object.prototype.toString.call(value) != '[object Object]') && (Object.prototype.toString.call(value) != '[object Array]')) 
+						{						
+								if(isNaN(key))
+						{
+						//alert(key);
+						info+="<br>"+key;
+						}	
+								info+=":"+value;
+						}
+											
+			}
+//alert("out fun"+info);			
+}
+//alert("abc"+info);
+document.getElementById("para").innerHTML=info;
+//alert("xyz");
+</script>
+</body>
+</html>
